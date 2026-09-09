@@ -17,35 +17,35 @@ export default function RootLayout() {
         <Stack.Screen
           name="index"
           options={{
-            title: "Estudar Já",
+            headerShown: false,
           }}
         />
 
         <Stack.Screen
           name="cards/index"
           options={{
-            title: "Meus cartões",
+            headerShown: false,
           }}
         />
 
         <Stack.Screen
           name="cards/create"
           options={{
-            title: "Novo cartão",
+            headerShown: false,
           }}
         />
 
         <Stack.Screen
           name="cards/edit"
           options={{
-            title: "Editar cartão",
+            headerShown: false,
           }}
         />
 
         <Stack.Screen
           name="review/index"
           options={{
-            title: "Revisão",
+            headerShown: false,
           }}
         />
       </Stack>
