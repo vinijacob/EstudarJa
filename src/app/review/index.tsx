@@ -170,6 +170,9 @@ export default function ReviewScreen() {
           style={StyleSheet.absoluteFill}
         />
 
+        <Pressable style={styles.backButton} onPress={() => router.back()}>
+          <ThemedText style={styles.backButtonText}>← Voltar</ThemedText>
+        </Pressable>
         <ThemedView style={styles.center}>
           <ThemedText style={styles.emptyIcon}>📚</ThemedText>
 
@@ -421,6 +424,7 @@ const styles = StyleSheet.create({
 
   primaryButtonText: {
     fontSize: 17,
+    padding: 20,
     fontWeight: "800",
     color: "#FFFFFF",
   },
