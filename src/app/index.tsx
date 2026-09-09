@@ -1,62 +1,51 @@
-import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { useRouter } from "expo-router";
+import { Pressable, StyleSheet } from "react-native";
 
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
-
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
-  }
-  if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
-    );
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
-  return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
-  );
-}
+import { ThemedText } from "@/components/themed-text";
+import { ThemedView } from "@/components/themed-view";
 
 export default function HomeScreen() {
+  const router = useRouter();
+
   return (
     <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
-          </ThemedText>
-        </ThemedView>
-
-        <ThemedText type="code" style={styles.code}>
-          get started
+      <ThemedView style={styles.header}>
+        <ThemedText type="title" style={styles.logo}>
+          Estudar Já
         </ThemedText>
 
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
-          />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
+        <ThemedText style={styles.subtitle}>
+          Estude um pouco. Lembre muito.
+        </ThemedText>
+      </ThemedView>
+
+      <ThemedView style={styles.content}>
+        <ThemedView style={styles.card}>
+          <ThemedText type="subtitle">Sua revisão de hoje</ThemedText>
+
+          <ThemedText style={styles.number}>0</ThemedText>
+
+          <ThemedText>cartões para revisar</ThemedText>
         </ThemedView>
 
-        {Platform.OS === 'web' && <WebBadge />}
-      </SafeAreaView>
+        <Pressable
+          style={styles.primaryButton}
+          onPress={() => router.push("/review")}
+        >
+          <ThemedText style={(styles.primaryButtonText, styles.buttons)}>
+            Começar revisão
+          </ThemedText>
+        </Pressable>
+
+        <Pressable
+          style={styles.secondaryButton}
+          onPress={() => router.push("/cards")}
+        >
+          <ThemedText style={(styles.secondaryButtonText, styles.buttons)}>
+            Meus cartões
+          </ThemedText>
+        </Pressable>
+      </ThemedView>
     </ThemedView>
   );
 }
@@ -64,35 +53,71 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
+    padding: 24,
   },
-  safeArea: {
+
+  header: {
+    marginTop: 60,
+    alignItems: "center",
+    backgroundColor: "transparent",
+  },
+
+  logo: {
+    fontSize: 42,
+    fontWeight: "800",
+  },
+
+  subtitle: {
+    marginTop: 8,
+    opacity: 0.6,
+    fontSize: 16,
+  },
+
+  content: {
     flex: 1,
-    paddingHorizontal: Spacing.four,
-    alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
-    maxWidth: MaxContentWidth,
+    justifyContent: "center",
+    gap: 16,
+    backgroundColor: "transparent",
   },
-  heroSection: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
+
+  card: {
+    padding: 28,
+    borderRadius: 20,
+    alignItems: "center",
+    gap: 8,
   },
-  title: {
-    textAlign: 'center',
+
+  number: {
+    fontSize: 56,
+    lineHeight: 64,
+    fontWeight: "800",
   },
-  code: {
-    textTransform: 'uppercase',
+
+  buttons: {
+    padding: 10,
+    borderRadius: 15,
+    backgroundColor: "#D1D5DB",
   },
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
+
+  primaryButton: {
+    paddingVertical: 18,
+    borderRadius: 14,
+    alignItems: "center",
+  },
+
+  primaryButtonText: {
+    fontSize: 17,
+    fontWeight: "700",
+  },
+
+  secondaryButton: {
+    paddingVertical: 16,
+    borderRadius: 14,
+    alignItems: "center",
+  },
+
+  secondaryButtonText: {
+    fontSize: 16,
+    fontWeight: "600",
   },
 });
